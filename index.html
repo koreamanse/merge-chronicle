@@ -217,6 +217,60 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 }
 .logout-btn:hover { background: rgba(255,100,100,0.15); }
 
+/* === RANKING === */
+#ranking-screen {
+  background: var(--bg-settings);
+  padding: 20px; gap: 12px;
+}
+.ranking-content {
+  width: 100%; max-width: 400px; overflow-y: auto; flex: 1;
+  scrollbar-width: none; padding: 10px 0;
+}
+.ranking-content::-webkit-scrollbar { display: none; }
+.ranking-empty {
+  text-align: center; color: var(--text-dim); font-size: 14px;
+  padding: 40px 0; letter-spacing: 1px;
+}
+.ranking-table {
+  width: 100%; border-collapse: collapse;
+}
+.ranking-table th {
+  font-size: 10px; color: var(--text-dim); letter-spacing: 2px;
+  padding: 8px 4px; text-align: center; font-weight: 700;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.ranking-table td {
+  padding: 10px 4px; text-align: center; font-size: 13px;
+  color: var(--text-secondary); border-bottom: 1px solid var(--border-subtle);
+}
+.ranking-row { transition: background 0.2s; }
+.ranking-row:hover { background: var(--bg-panel-hover); }
+.ranking-row.my-score { background: rgba(var(--accent-gold),0.06); }
+.rank-num {
+  font-weight: 900; font-size: 15px; color: var(--text-primary); width: 36px;
+}
+.rank-1 { color: #ffd700; }
+.rank-2 { color: #c0c0c0; }
+.rank-3 { color: #cd7f32; }
+.rank-user {
+  display: flex; align-items: center; gap: 6px; justify-content: flex-start;
+}
+.rank-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+}
+.rank-name {
+  font-size: 13px; font-weight: 700; color: var(--text-primary);
+  max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.rank-score {
+  font-weight: 900; color: rgb(var(--accent-gold)); font-size: 14px;
+}
+.ranking-loading {
+  text-align: center; color: var(--text-dim); font-size: 13px;
+  padding: 40px 0; letter-spacing: 1px;
+}
+
 /* === GAME SCREEN === */
 #game-screen {
   background: var(--bg-game);
@@ -698,6 +752,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 </style>
 <script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 <div id="app">
@@ -724,6 +779,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
     <div class="title-menu">
       <button class="t-btn gold" id="btn-play">&#xAC8C;&#xC784; &#xC2DC;&#xC791;</button>
+      <button class="t-btn" id="btn-ranking">랭킹</button>
       <button class="t-btn" id="btn-howto">&#xAC8C;&#xC784; &#xBC29;&#xBC95;</button>
       <button class="t-btn" id="btn-settings">&#xC124;&#xC815;</button>
     </div>
@@ -871,6 +927,17 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
   </div>
 
+  <!-- RANKING -->
+  <div id="ranking-screen" class="screen">
+    <div class="scr-header">
+      <button class="btn-back" id="btn-back-ranking">&#x2190;</button>
+      <div class="scr-title">랭킹</div>
+    </div>
+    <div class="ranking-content" id="ranking-content">
+      <div class="ranking-loading" id="ranking-loading">불러오는 중...</div>
+    </div>
+  </div>
+
   <!-- SETTINGS -->
   <div id="settings-screen" class="screen">
     <div class="scr-header">
@@ -927,14 +994,66 @@ const firebaseConfig = {
 
 let firebaseReady = false;
 let auth = null;
+let db = null;
 let currentUser = null;
 
 try {
   firebase.initializeApp(firebaseConfig);
   auth = firebase.auth();
+  db = firebase.firestore();
   firebaseReady = true;
 } catch(e) {
-  console.warn('Firebase 미설정 - 로그인 기능 비활성화');
+  console.warn('Firebase 미설정 - 로그인/랭킹 기능 비활성화');
+}
+
+// --- RANKING ---
+async function saveScore(finalScore, merges, bestCombo, hofCount) {
+  if (!firebaseReady || !db || !currentUser) return;
+  try {
+    await db.collection('scores').add({
+      uid: currentUser.uid,
+      name: currentUser.displayName || '익명',
+      photoURL: currentUser.photoURL || '',
+      score: finalScore,
+      merges: merges,
+      maxCombo: bestCombo,
+      hof: hofCount,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch(e) {
+    console.error('점수 저장 실패:', e);
+  }
+}
+
+async function loadRanking() {
+  if (!firebaseReady || !db) return [];
+  try {
+    const snapshot = await db.collection('scores')
+      .orderBy('score', 'desc')
+      .limit(20)
+      .get();
+    const ranking = [];
+    snapshot.forEach(doc => ranking.push(doc.data()));
+    return ranking;
+  } catch(e) {
+    console.error('랭킹 조회 실패:', e);
+    return [];
+  }
+}
+
+async function loadMyBestRanking() {
+  if (!firebaseReady || !db || !currentUser) return null;
+  try {
+    const snapshot = await db.collection('scores')
+      .where('uid', '==', currentUser.uid)
+      .orderBy('score', 'desc')
+      .limit(1)
+      .get();
+    if (snapshot.empty) return null;
+    return snapshot.docs[0].data();
+  } catch(e) {
+    return null;
+  }
 }
 
 function loginWithGoogle() {
@@ -1609,6 +1728,8 @@ function checkGameOver() {
     document.getElementById('go-hof').textContent = hofCount;
     document.getElementById('go-new-record').innerHTML = isNewBest
       ? '<div class="go-new-record">NEW RECORD!</div>' : '';
+    // Firestore에 점수 저장
+    saveScore(score, mergeCount, maxCombo, hofCount);
     showScreen('gameover-screen');
   }, 700);
 }
@@ -1642,6 +1763,43 @@ function applySettings() {
 function toggleTheme() { save.theme = save.theme === 'dark' ? 'light' : 'dark'; applySettings(); writeSave(); SFX.play('click'); }
 function toggleSfx() { save.sfx=!save.sfx; applySettings(); writeSave(); SFX.play('click'); }
 function toggleVib() { save.vib=!save.vib; applySettings(); writeSave(); SFX.play('click'); }
+
+// --- RANKING UI ---
+async function showRankingScreen() {
+  showScreen('ranking-screen');
+  const content = document.getElementById('ranking-content');
+  content.innerHTML = '<div class="ranking-loading">불러오는 중...</div>';
+
+  const ranking = await loadRanking();
+
+  if (ranking.length === 0) {
+    content.innerHTML = '<div class="ranking-empty">아직 기록이 없습니다.<br>게임을 플레이하고 점수를 등록하세요!</div>';
+    return;
+  }
+
+  let html = '<table class="ranking-table"><thead><tr>';
+  html += '<th>순위</th><th>플레이어</th><th>점수</th><th>콤보</th>';
+  html += '</tr></thead><tbody>';
+
+  ranking.forEach((r, i) => {
+    const isMe = currentUser && r.uid === currentUser.uid;
+    const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+    html += `<tr class="ranking-row${isMe ? ' my-score' : ''}">`;
+    html += `<td class="rank-num ${rankClass}">${i + 1}</td>`;
+    html += `<td><div class="rank-user">`;
+    if (r.photoURL) {
+      html += `<img class="rank-avatar" src="${r.photoURL}" alt="">`;
+    }
+    html += `<span class="rank-name">${r.name || '익명'}</span>`;
+    html += `</div></td>`;
+    html += `<td class="rank-score">${(r.score || 0).toLocaleString()}</td>`;
+    html += `<td>${r.maxCombo ? r.maxCombo + 'x' : '-'}</td>`;
+    html += `</tr>`;
+  });
+
+  html += '</tbody></table>';
+  content.innerHTML = html;
+}
 
 // --- HOW TO PLAY ---
 function renderHowtoChain() {
@@ -1826,6 +1984,7 @@ function shuffle(arr) {
 document.getElementById('btn-play').addEventListener('click', startGame);
 document.getElementById('btn-howto').addEventListener('click', () => { renderHowtoChain(); showScreen('howto-screen'); SFX.play('click'); });
 document.getElementById('btn-settings').addEventListener('click', () => { applySettings(); showScreen('settings-screen'); SFX.play('click'); });
+document.getElementById('btn-ranking').addEventListener('click', () => { showRankingScreen(); SFX.play('click'); });
 
 document.getElementById('btn-pause').addEventListener('click', pauseGame);
 document.getElementById('btn-resume').addEventListener('click', resumeGame);
@@ -1837,6 +1996,7 @@ document.getElementById('btn-go-home').addEventListener('click', () => { showScr
 
 document.getElementById('btn-back-howto').addEventListener('click', () => { showScreen('title-screen'); SFX.play('click'); });
 document.getElementById('btn-back-settings').addEventListener('click', () => { showScreen('title-screen'); SFX.play('click'); });
+document.getElementById('btn-back-ranking').addEventListener('click', () => { showScreen('title-screen'); SFX.play('click'); });
 
 document.getElementById('slot-purify').addEventListener('click', () => activateItem('purify'));
 document.getElementById('slot-bomb').addEventListener('click', () => activateItem('bomb'));
