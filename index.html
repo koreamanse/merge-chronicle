@@ -68,7 +68,7 @@
   --text-secondary: #2d2d44;
   --text-dim: rgba(20,20,40,0.55);
   --text-muted: rgba(20,20,40,0.5);
-  --text-faint: rgba(20,20,40,0.25);
+  --text-faint: rgba(20,20,40,0.9);
   --accent-purple: 100,70,180;
   --accent-gold: 170,130,0;
   --shadow-color: rgba(30,30,60,0.1);
@@ -930,7 +930,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
         이동할 때마다 새 유닛 3개가 등장합니다.</p>
       </div>
       <div class="howto-section">
-        <h3>&#x1F52E; 합성 체인</h3>
+        <h3>&#x2744;&#xFE0F; 합성 체인</h3>
         <p>같은 유닛 2개를 합치면<br>다음 단계로 진화합니다.</p>
         <div class="howto-chain" id="howto-chain"></div>
       </div>
@@ -1169,7 +1169,7 @@ if (firebaseReady && auth) {
 
 // --- UNITS ---
 const UNITS = [
-  { emoji: '\u{1F52E}', name: '오브',   color: '#b388ff' },  // 0
+  { emoji: '\u2744\uFE0F', name: '눈결정', color: '#90caf9' },  // 0
   { emoji: '\u{1F4A7}', name: '물방울', color: '#4fc3f7' },  // 1
   { emoji: '\u{1F525}', name: '불꽃',   color: '#ff7043' },  // 2
   { emoji: '\u{1F33F}', name: '새싹',   color: '#66bb6a' },  // 3
@@ -1366,14 +1366,14 @@ function initBoard() {
     board[r]=[];
     for(let c=0;c<GRID;c++) board[r][c]=null;
   }
-  // Fill ~40% with tier 0-1
+  // Fill with tier 0-4 (5종류 랜덤)
   const cells = [];
   for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++) cells.push({r,c});
   shuffle(cells);
   const count = INIT_UNIT_COUNT;
   for(let i=0;i<count;i++){
     const {r,c}=cells[i];
-    board[r][c] = { tier: Math.random()<0.75 ? 0 : 1 };
+    board[r][c] = { tier: Math.floor(Math.random()*5) };
   }
 }
 
@@ -1812,6 +1812,7 @@ function startGame() {
   selected = null; isNewBest = false; gameActive = true; animating = false;
   items = { purify: 0, bomb: 0, transform: 0 }; itemMode = null; scoreMilestone = 0;
   initBoard();
+  for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++) if(board[r][c] && board[r][c].tier > maxTier) maxTier = board[r][c].tier;
   renderBoard();
   renderTierBar();
   updateHUD();
