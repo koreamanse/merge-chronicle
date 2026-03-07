@@ -17,19 +17,10 @@
     - Firebase에 동의 여부/일시 저장
   - 고민 포인트: 현재처럼 편하게 로그인+기록 관리하면서 공식 가입자(회원수)로 유치하는 방법
 
-- [ ] Google 로그인 인앱 브라우저 차단 문제 해결
-  - 증상: 카카오톡 등 SNS에서 URL 공유 후 인앱 브라우저로 열면 Google 로그인 시 403 오류 (disallowed_useragent)
-  - 원인: Google이 보안 정책상 인앱 브라우저(WebView)에서의 OAuth 로그인을 차단
-  - 대상 인앱 브라우저: 카카오톡, 라인, 페이스북, 인스타그램, 네이버, 트위터 등
-  - 해결 방안:
-    1. User-Agent 기반 인앱 브라우저 감지 스크립트 추가
-       - KAKAOTALK, Line, FBAN(페이스북), Instagram, NAVER, Twitter 등 키워드 감지
-    2. 감지 시 외부 브라우저로 자동 리다이렉트
-       - Android: intent:// 스킴으로 Chrome 실행
-       - iOS: window.open() 또는 location.href로 Safari 유도
-       - 공통 폴백: 외부 브라우저에서 열어달라는 안내 메시지 표시
-    3. 적용 위치: index.html 최상단 script에서 페이지 로드 전 즉시 실행
-    4. 로그인 버튼 클릭 시에도 한번 더 체크하여 이중 방어
+- [x] Google 로그인 인앱 브라우저 차단 문제 해결 (v1.07.01) - 완료: 2026-03-07 22:00:00
+  - User-Agent 기반 인앱 브라우저 감지 (카카오톡, 라인, 페이스북, 인스타그램, 네이버 등)
+  - 감지 시 외부 브라우저 리다이렉트 (Android intent, iOS window.open, 폴백 안내 팝업)
+  - 로그인 버튼 클릭 시 이중 방어
 
 ---
 
