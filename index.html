@@ -2299,6 +2299,7 @@ document.getElementById('btn-delete-account').addEventListener('click', () => {
       save = { best:0, bestHof:0, sfx:true, vib:true, theme:'dark' };
       writeSave(); applySettings(); initTitle();
       showScreen('title-screen');
+      showConfirm('Your account has been\nsuccessfully deleted.', () => {});
     } catch(e) {
       console.error('Account deletion failed:', e);
       if (e.code === 'auth/requires-recent-login') {

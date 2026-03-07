@@ -4,6 +4,16 @@
 
 ## 진행 예정
 
+- [ ] Brain Training 메인 포털 구축
+  - koreamanse.github.io 리포 생성, 메인 페이지 (로그인/약관/게임 목록)
+  - 게임: Merge Chronicle, Dessert Match, Memory Block, Spatial Perception Block
+  - 공용 회원관리/약관을 포털에서 통합 관리
+  - 각 게임은 별도 리포, Firebase 세션 공유로 자동 로그인
+
+- [ ] merge-chronicle 로그인/회원관리를 포털로 이관
+  - 포털 구축 후 게임 내 로그인/탈퇴 기능을 포털로 이동
+  - 게임은 Firebase 세션 공유로 로그인 상태만 확인
+
 - [x] 랭킹 기간별 필터 (v1.08.01) - 완료: 2026-03-08 01:30:00
   - ALL / YEARLY / MONTHLY / DAILY 탭 버튼, 기본 ALL
 
