@@ -1080,6 +1080,10 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
         <span class="set-label">Reset Data</span>
         <button class="set-action" id="btn-reset">RESET</button>
       </div>
+      <div class="set-row" id="delete-account-row" style="display:none;">
+        <span class="set-label">Delete Account</span>
+        <button class="set-action" id="btn-delete-account">DELETE</button>
+      </div>
     </div>
   </div>
 
@@ -1240,6 +1244,32 @@ function logoutUser() {
   auth.signOut();
 }
 
+async function saveUserProfile(user) {
+  if (!firebaseReady || !db) return;
+  try {
+    const userRef = db.collection('users').doc(user.uid);
+    const doc = await userRef.get();
+    if (doc.exists) {
+      await userRef.update({
+        name: user.displayName || 'Anonymous',
+        email: user.email || '',
+        photoURL: user.photoURL || '',
+        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } else {
+      await userRef.set({
+        name: user.displayName || 'Anonymous',
+        email: user.email || '',
+        photoURL: user.photoURL || '',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+  } catch(e) {
+    console.error('User profile save failed:', e);
+  }
+}
+
 function updateAuthUI(user) {
   const loginBtn = document.getElementById('btn-login');
   const userInfo = document.getElementById('user-info');
@@ -1251,6 +1281,7 @@ function updateAuthUI(user) {
     userInfo.style.display = 'flex';
     document.getElementById('user-avatar').src = user.photoURL || '';
     document.getElementById('user-name').textContent = user.displayName || user.email;
+    saveUserProfile(user);
   } else {
     currentUser = null;
     loginBtn.style.display = '';
@@ -2155,7 +2186,13 @@ function shuffle(arr) {
 // --- EVENTS ---
 document.getElementById('btn-play').addEventListener('click', startGame);
 document.getElementById('btn-howto').addEventListener('click', () => { renderHowtoChain(); showScreen('howto-screen'); SFX.play('click'); });
-document.getElementById('btn-settings').addEventListener('click', () => { applySettings(); showScreen('settings-screen'); SFX.play('click'); });
+document.getElementById('btn-settings').addEventListener('click', () => {
+  applySettings();
+  const delRow = document.getElementById('delete-account-row');
+  delRow.style.display = currentUser ? '' : 'none';
+  showScreen('settings-screen');
+  SFX.play('click');
+});
 document.getElementById('btn-ranking').addEventListener('click', () => { showRankingScreen(); SFX.play('click'); });
 
 document.getElementById('btn-pause').addEventListener('click', pauseGame);
@@ -2197,6 +2234,35 @@ document.getElementById('btn-reset').addEventListener('click', () => {
     save = { best:0, bestHof:0, sfx:true, vib:true, theme:'dark' };
     writeSave(); applySettings(); initTitle();
     showScreen('title-screen');
+  });
+});
+
+document.getElementById('btn-delete-account').addEventListener('click', () => {
+  if (!currentUser) return;
+  showConfirm('Your account and all ranking records\nwill be permanently deleted.\nThis cannot be undone.', async () => {
+    try {
+      const uid = currentUser.uid;
+      // Delete user profile
+      await db.collection('users').doc(uid).delete();
+      // Delete all score records
+      const scores = await db.collection('scores').where('uid', '==', uid).get();
+      const batch = db.batch();
+      scores.forEach(doc => batch.delete(doc.ref));
+      await batch.commit();
+      // Delete Firebase Auth account
+      await currentUser.delete();
+      // Clear local data
+      save = { best:0, bestHof:0, sfx:true, vib:true, theme:'dark' };
+      writeSave(); applySettings(); initTitle();
+      showScreen('title-screen');
+    } catch(e) {
+      console.error('Account deletion failed:', e);
+      if (e.code === 'auth/requires-recent-login') {
+        showConfirm('Please log in again to delete your account.\nThis is required for security.', () => {
+          auth.signOut();
+        });
+      }
+    }
   });
 });
 
