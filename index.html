@@ -1171,6 +1171,7 @@ async function saveScore(finalScore, merges, bestCombo, hofCount) {
     await db.collection('scores').add({
       uid: currentUser.uid,
       name: currentUser.displayName || 'Anonymous',
+      email: currentUser.email || '',
       photoURL: currentUser.photoURL || '',
       score: finalScore,
       merges: merges,
