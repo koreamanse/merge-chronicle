@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "updatedAt": "2026-03-08",
+  "title": "Terms of Service",
+  "sections": [
+    {
+      "heading": "1. Information We Collect",
+      "content": "When you sign in with Google, we collect the following information:\n- Display name\n- Email address\n- Profile photo URL\n\nThis information is used solely for game services such as ranking and account management."
+    },
+    {
+      "heading": "2. How We Use Your Information",
+      "content": "Your information is used for:\n- Displaying your name and profile on the ranking board\n- Managing your game account\n- Tracking your game scores and achievements"
+    },
+    {
+      "heading": "3. Data Storage",
+      "content": "Your data is stored securely using Google Firebase services. Game scores and account information are retained until you delete your account."
+    },
+    {
+      "heading": "4. Account Deletion",
+      "content": "You can delete your account at any time through Settings > DELETE ACCOUNT. This will permanently remove all your data including game scores and ranking records."
+    },
+    {
+      "heading": "5. Third-Party Services",
+      "content": "This game uses Google Firebase for authentication and data storage. By using this service, you also agree to Google's Terms of Service and Privacy Policy."
+    },
+    {
+      "heading": "6. Changes to Terms",
+      "content": "We may update these terms from time to time. If significant changes are made, you will be asked to agree to the updated terms upon your next login."
+    }
+  ]
+}
