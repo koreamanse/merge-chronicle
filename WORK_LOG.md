@@ -6,9 +6,12 @@
 
 ## 2026-03-07 업데이트 (v1.07.00)
 
+[변경] 유닛 순서 변경: Droplet(물방울)을 Tier 0으로, Snowflake(눈결정)을 Tier 1로 교체
+- UNITS 배열 순서 변경, 개발문서 합성 체인/점수 표 반영
+
 [변경] 전체 UI 영문화 (Full English Localization)
 - 타이틀/설정/게임오버/일시정지/게임방법/랭킹/확인 다이얼로그 등 모든 화면 텍스트 영어로 변환
-- 유닛 이름 영문화: Snowflake, Droplet, Flame, Sprout, Gem, Star, Moon, Sun, Crown, Trident
+- 유닛 이름 영문화: Droplet, Snowflake, Flame, Sprout, Gem, Star, Moon, Sun, Crown, Trident
 - 아이템 메시지, 토스트 알림, 랭킹 테이블 헤더 등 JS 내 모든 한글 문자열 영어로 변환
 - 코드 주석 및 console 메시지 영문화
 
