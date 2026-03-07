@@ -4,6 +4,38 @@
 
 ---
 
+## 2026-03-07 업데이트 (v1.7)
+
+[변경] 전체 UI 영문화 (Full English Localization)
+- 타이틀/설정/게임오버/일시정지/게임방법/랭킹/확인 다이얼로그 등 모든 화면 텍스트 영어로 변환
+- 유닛 이름 영문화: Snowflake, Droplet, Flame, Sprout, Gem, Star, Moon, Sun, Crown, Trident
+- 아이템 메시지, 토스트 알림, 랭킹 테이블 헤더 등 JS 내 모든 한글 문자열 영어로 변환
+- 코드 주석 및 console 메시지 영문화
+
+[개선] 타이틀 버튼 리디자인
+- 버튼 폭 240px -> 280px 확대, 서체 14px 통일
+- 아이콘 왼쪽/텍스트 오른쪽 flex space-between 정렬
+- PLAY 버튼 빨간색(#ff0000) 배경 채움
+- 라이트모드 버튼 검정(#1a1a2e) 배경 + 흰색 텍스트
+- Google 로그인 버튼 280px 통일, Font Awesome fa-brands fa-google 아이콘 적용
+
+[개선] 아이템 바 디자인 개선
+- 아이템 숫자 네모 박스 제거, 세로선(|) 구분자로 변경
+- 아이템 0개 표시 흐림 제거 (가독성 향상)
+- 아이템 이모지 -> Font Awesome 아이콘 교체 (fa-wand-magic-sparkles, fa-bomb, fa-arrows-rotate)
+- 다크모드 아이콘 흰색, 라이트모드 아이콘 검정 색상 적용
+
+[추가] Third-Party Licenses 표기 (index.html 상단 주석)
+- Font Awesome 6.5.1 (CC BY 4.0 / SIL OFL 1.1 / MIT)
+- Google Fonts - Noto Sans KR (SIL OFL 1.1)
+- Firebase JS SDK (Apache 2.0)
+
+[추가] 공통 CLAUDE.md 외부 리소스 규칙 추가
+- Font Awesome Free 전용 (Pro 아이콘 사용 금지)
+- 라이선스 표기 의무 규칙 추가
+
+---
+
 ## 2026-03-07 업데이트 (v1.6)
 
 [개선] UI 전면 리디자인

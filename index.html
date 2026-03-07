@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <!--
-  MERGE CHRONICLE - 합성의 연대기
+  MERGE CHRONICLE
+  Copyright (c) 2026 koreamanse. All Rights Reserved.
 
-  [라이선스]
-  - Google Fonts "Noto Sans KR" — SIL Open Font License 1.1
+  [Third-Party Licenses]
+  - Font Awesome Free 6.5.1
+    Icons: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+    Fonts: SIL OFL 1.1 (https://scripts.sil.org/OFL)
+    Code: MIT License (https://opensource.org/licenses/MIT)
+    https://fontawesome.com
+
+  - Google Fonts "Noto Sans KR"
+    SIL Open Font License 1.1 (https://scripts.sil.org/OFL)
     https://fonts.google.com/specimen/Noto+Sans+KR
-    https://scripts.sil.org/OFL
+
+  - Firebase JavaScript SDK
+    Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+    https://firebase.google.com
 -->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>MERGE CHRONICLE - 합성의 연대기</title>
+<title>MERGE CHRONICLE</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
@@ -154,8 +165,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 .title-best span { color: rgb(var(--accent-gold)); font-weight: 700; font-size: 18px; }
 .title-menu { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px; align-items: center; }
 .t-btn {
-  width: 240px; padding: 10px 20px; text-align: left; border: 2px solid rgba(255,255,255,0.6);
-  background: rgba(255,255,255,0.06); color: #fff; font-size: 16px; font-weight: 700;
+  width: 280px; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border: 2px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.06); color: #fff; font-size: 14px; font-weight: 700;
   font-family: 'Noto Sans KR', sans-serif; cursor: pointer; border-radius: 14px;
   transition: all 0.3s ease; letter-spacing: 5px; backdrop-filter: blur(6px);
   position: relative; overflow: hidden;
@@ -171,8 +182,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.9);
   transform: scale(1.04); box-shadow: 0 0 25px rgba(255,255,255,0.2);
 }
-.t-btn.gold { border-color: rgba(255,255,255,0.6); color: #fff; background: rgba(255,255,255,0.06); }
-.t-btn.gold:hover { border-color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.15); box-shadow: 0 0 25px rgba(255,255,255,0.2); }
+.t-btn.gold { border-color: #ff0000; color: #fff; background: #ff0000; }
+.t-btn.gold:hover { border-color: #e60000; background: #e60000; box-shadow: 0 0 25px rgba(255,0,0,0.4); }
 
 /* === AUTH === */
 .auth-area {
@@ -181,7 +192,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 }
 .login-btn {
   display: flex; align-items: center; gap: 10px;
-  width: 240px; padding: 10px 0; border-radius: 14px; justify-content: center;
+  width: 280px; padding: 10px 0; border-radius: 14px; justify-content: center;
   border: 2px solid rgba(34,120,60,0.6);
   background: rgba(34,120,60,0.85); backdrop-filter: none;
   color: #fff; font-size: 14px; font-weight: 700;
@@ -192,11 +203,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   background: rgba(34,120,60,1); border-color: rgba(34,120,60,0.9);
   transform: scale(1.04); box-shadow: 0 0 20px rgba(34,120,60,0.3);
 }
-.login-btn .g-logo {
-  width: 20px; height: 20px; border-radius: 50%; background: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 900; color: #4285f4; line-height: 1;
-}
+.login-btn i { font-size: 16px; }
 .user-info {
   display: flex; align-items: center; gap: 8px;
   padding: 6px 14px; border-radius: 20px;
@@ -696,15 +703,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   100% { box-shadow: 0 0 18px rgba(255,215,0,0.35); }
 }
 .item-icon {
-  font-size: 18px; line-height: 1; padding: 6px 8px;
+  font-size: 18px; line-height: 1; padding: 6px 8px; color: #fff;
 }
 .item-count {
   display: flex; align-items: center; justify-content: center;
-  min-width: 24px; padding: 6px 6px; font-size: 14px; font-weight: 900;
-  color: #fff; background: #ff4081; border-left: 1.5px solid var(--border-subtle);
+  min-width: 16px; padding: 0 0 0 7px; margin-left: 1px; font-size: 14px; font-weight: 900;
+  color: #ff4081; border-left: 1.5px solid var(--border-subtle);
   line-height: 1;
 }
-.item-count.zero { background: var(--border-light); color: var(--text-dim); }
+.item-count.zero { color: var(--text-secondary); }
 
 /* Item mode cell highlights */
 .cell.purify-target {
@@ -761,13 +768,13 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   text-shadow: 0 1px 2px rgba(30,30,60,0.1);
 }
 [data-theme="light"] .title-sub { color: #4a4a60; }
-[data-theme="light"] .t-btn { backdrop-filter: none; background: rgba(255,255,255,0.6); border-color: rgba(34,120,60,0.5); color: #1a1a2e; }
+[data-theme="light"] .t-btn { backdrop-filter: none; background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
 [data-theme="light"] .t-btn:hover, [data-theme="light"] .t-btn:active {
-  background: rgba(255,255,255,0.85); border-color: rgba(34,120,60,0.8);
-  box-shadow: 0 0 20px rgba(34,120,60,0.25);
+  background: #2a2a44; border-color: #2a2a44;
+  box-shadow: 0 0 20px rgba(26,26,46,0.3);
 }
-[data-theme="light"] .t-btn.gold { background: rgba(255,255,255,0.7); border-color: rgba(34,120,60,0.5); }
-[data-theme="light"] .t-btn.gold:hover { background: rgba(255,255,255,0.9); border-color: rgba(34,120,60,0.8); }
+[data-theme="light"] .t-btn.gold { background: #ff0000; border-color: #ff0000; color: #fff; }
+[data-theme="light"] .t-btn.gold:hover { background: #e60000; border-color: #e60000; box-shadow: 0 0 20px rgba(255,0,0,0.3); }
 [data-theme="light"] .login-btn { background: rgba(34,120,60,0.9); }
 [data-theme="light"] .login-btn:hover { background: rgba(34,120,60,1); }
 [data-theme="light"] .hud-val { text-shadow: none; color: #1a1a2e; }
@@ -791,10 +798,11 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 [data-theme="light"] .game-toast-overlay { background: rgba(244,245,248,0.5); }
 [data-theme="light"] .item-bar { background: rgba(255,255,255,0.65); border-color: rgba(0,0,0,0.6); }
 [data-theme="light"] .item-slot { background: rgba(255,255,255,0.75); border-color: rgba(0,0,0,0.6); }
-[data-theme="light"] .item-count { border-left-color: rgba(0,0,0,0.6); }
-[data-theme="light"] .item-count.zero { background: rgba(0,0,0,0.08); color: #666; }
+[data-theme="light"] .item-count { border-left-color: rgba(0,0,0,0.4); color: #d81b60; }
+[data-theme="light"] .item-count.zero { color: #555; }
 [data-theme="light"] .item-slot.disabled { opacity: 0.6; }
 [data-theme="light"] .item-bar-label { color: #2d2d44; }
+[data-theme="light"] .item-icon { color: #1a1a2e; }
 [data-theme="light"] .item-slot:hover { background: rgba(255,255,255,0.85); }
 [data-theme="light"] .tier-bar { background: rgba(255,255,255,0.65); border-color: rgba(0,0,0,0.6); }
 [data-theme="light"] .tier-item { opacity: 0.5; }
@@ -830,19 +838,19 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
     <div class="auth-area" id="auth-area">
       <button class="login-btn" id="btn-login" style="display:none;">
-        <span class="g-logo">G</span>Google 로그인
+        <i class="fa-brands fa-google"></i> Google Login
       </button>
       <div class="user-info" id="user-info" style="display:none;">
         <img class="user-avatar" id="user-avatar" src="" alt="">
         <span class="user-name" id="user-name"></span>
-        <button class="logout-btn" id="btn-logout">로그아웃</button>
+        <button class="logout-btn" id="btn-logout">Logout</button>
       </div>
     </div>
     <div class="title-menu">
-      <button class="t-btn gold" id="btn-play"><i class="fa-solid fa-play"></i> 게임 시작</button>
-      <button class="t-btn" id="btn-ranking"><i class="fa-solid fa-trophy"></i> 랭킹</button>
-      <button class="t-btn" id="btn-howto"><i class="fa-solid fa-circle-question"></i> 게임 방법</button>
-      <button class="t-btn" id="btn-settings"><i class="fa-solid fa-gear"></i> 설정</button>
+      <button class="t-btn gold" id="btn-play"><i class="fa-solid fa-play"></i><span>PLAY</span></button>
+      <button class="t-btn" id="btn-ranking"><i class="fa-solid fa-trophy"></i><span>RANKING</span></button>
+      <button class="t-btn" id="btn-howto"><i class="fa-solid fa-circle-question"></i><span>HOW TO PLAY</span></button>
+      <button class="t-btn" id="btn-settings"><i class="fa-solid fa-gear"></i><span>SETTINGS</span></button>
     </div>
   </div>
 
@@ -871,15 +879,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     <div class="item-bar" id="item-bar">
       <span class="item-bar-label">ITEM</span>
       <div class="item-slot disabled" id="slot-purify" data-item="purify">
-        <span class="item-icon">&#x2728;</span>
+        <span class="item-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
         <span class="item-count zero" id="count-purify">0</span>
       </div>
       <div class="item-slot disabled" id="slot-bomb" data-item="bomb">
-        <span class="item-icon">&#x1F4A3;</span>
+        <span class="item-icon"><i class="fa-solid fa-bomb"></i></span>
         <span class="item-count zero" id="count-bomb">0</span>
       </div>
       <div class="item-slot disabled" id="slot-transform" data-item="transform">
-        <span class="item-icon">&#x1F504;</span>
+        <span class="item-icon"><i class="fa-solid fa-arrows-rotate"></i></span>
         <span class="item-count zero" id="count-transform">0</span>
       </div>
     </div>
@@ -893,7 +901,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div id="gameover-screen" class="screen">
     <div class="go-container">
       <div class="go-title">GAME OVER</div>
-      <div class="go-sub">&#xB354; &#xC774;&#xC0C1; &#xD569;&#xC131;&#xD560; &#xC218; &#xC5C6;&#xC2B5;&#xB2C8;&#xB2E4;</div>
+      <div class="go-sub">No more merges available</div>
       <div class="go-score-box">
         <div class="go-score-label">SCORE</div>
         <div class="go-score-val" id="go-score">0</div>
@@ -902,21 +910,21 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
       </div>
       <div class="go-stats">
         <div class="go-stat">
-          <div class="gs-label">&#xD569;&#xC131;</div>
+          <div class="gs-label">MERGE</div>
           <div class="gs-val" id="go-merges">0</div>
         </div>
         <div class="go-stat">
-          <div class="gs-label">&#xCF64;&#xBCF4;</div>
+          <div class="gs-label">COMBO</div>
           <div class="gs-val" id="go-combo">0</div>
         </div>
         <div class="go-stat">
-          <div class="gs-label">&#xD2B8;&#xB85C;&#xD53C; &#xD68D;&#xB4DD;</div>
+          <div class="gs-label">TROPHY</div>
           <div class="gs-val" id="go-hof">0</div>
         </div>
       </div>
       <div class="go-btns">
-        <button class="go-btn primary" id="btn-retry">&#xB2E4;&#xC2DC; &#xC2DC;&#xC791;</button>
-        <button class="go-btn secondary" id="btn-go-home">&#xD648;</button>
+        <button class="go-btn primary" id="btn-retry">RETRY</button>
+        <button class="go-btn secondary" id="btn-go-home">HOME</button>
       </div>
     </div>
   </div>
@@ -924,10 +932,10 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- PAUSE -->
   <div id="pause-screen" class="screen">
     <div class="pause-box">
-      <div class="pause-title">&#xC77C;&#xC2DC;&#xC815;&#xC9C0;</div>
-      <button class="pause-btn resume" id="btn-resume">&#xACC4;&#xC18D;</button>
-      <button class="pause-btn" id="btn-restart">&#xC0C8; &#xAC8C;&#xC784;</button>
-      <button class="pause-btn" id="btn-quit">&#xD648;&#xC73C;&#xB85C;</button>
+      <div class="pause-title">PAUSED</div>
+      <button class="pause-btn resume" id="btn-resume">RESUME</button>
+      <button class="pause-btn" id="btn-restart">NEW GAME</button>
+      <button class="pause-btn" id="btn-quit">HOME</button>
     </div>
   </div>
 
@@ -935,53 +943,53 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div id="howto-screen" class="screen">
     <div class="scr-header">
       <button class="btn-back" id="btn-back-howto">&#x2190;</button>
-      <div class="scr-title">&#xAC8C;&#xC784; &#xBC29;&#xBC95;</div>
+      <div class="scr-title">HOW TO PLAY</div>
     </div>
     <div class="howto-content">
       <div class="howto-section">
-        <h3>&#x1F3AE; 기본 조작</h3>
-        <p>유닛을 <b>탭</b>하여 선택한 후,<br>
-        인접한 <b>같은 유닛</b>을 탭하면 합성!<br>
-        빈 칸을 탭하면 이동합니다.<br>
-        이동할 때마다 새 유닛 3개가 등장합니다.</p>
+        <h3>&#x1F3AE; Controls</h3>
+        <p><b>Tap</b> a unit to select it.<br>
+        Tap an adjacent <b>same unit</b> to merge!<br>
+        Tap an empty cell to move.<br>
+        3 new units spawn after each move.</p>
       </div>
       <div class="howto-section">
-        <h3>&#x2744;&#xFE0F; 합성 체인</h3>
-        <p>같은 유닛 2개를 합치면<br>다음 단계로 진화합니다.</p>
+        <h3>&#x2744;&#xFE0F; Merge Chain</h3>
+        <p>Merge 2 identical units<br>to evolve to the next tier.</p>
         <div class="howto-chain" id="howto-chain"></div>
       </div>
       <div class="howto-section">
-        <h3>&#x1F4A5; 콤보 시스템</h3>
-        <p>연속으로 합성하면 콤보 배수!<br>
-        높은 콤보일수록 더 많은 점수.<br>
-        이동하면 콤보가 초기화됩니다.</p>
+        <h3>&#x1F4A5; Combo System</h3>
+        <p>Chain merges for combo multiplier!<br>
+        Higher combos = more points.<br>
+        Moving resets the combo.</p>
       </div>
       <div class="howto-section">
-        <h3>&#x1F381; 특수 아이템</h3>
-        <p>조건을 달성하면 특수 아이템을 획득!<br>
-        보드 위 아이템 슬롯을 탭하여 사용합니다.<br>
-        각 아이템은 <b>최대 <span id="howto-item-max">3</span>개</b>까지 보관 가능합니다.</p>
+        <h3>&#x1F381; Special Items</h3>
+        <p>Earn special items by meeting conditions!<br>
+        Tap the item slot on the board to use.<br>
+        Each item holds up to <b><span id="howto-item-max">3</span> max</b>.</p>
         <p style="margin-top:8px;">
-        <b>&#x2728; 정화</b> — 👑왕관 합성 시 획득<br>
-        선택한 유닛과 같은 종류 전체 삭제<br><br>
-        <b>&#x1F4A3; 폭탄</b> — 7콤보 달성 시 마다 획득<br>
-        선택한 위치 주변 3×3 범위 삭제<br><br>
-        <b>&#x1F504; 변환</b> — 100만점 돌파 시 획득<br>
-        선택한 유닛을 한 단계 승급</p>
+        <b>&#x2728; Purify</b> — Earned on Crown merge<br>
+        Removes all units of the same type<br><br>
+        <b>&#x1F4A3; Bomb</b> — Earned every 7 combos<br>
+        Destroys units in a 3x3 area<br><br>
+        <b>&#x1F504; Transform</b> — Earned at 1M points<br>
+        Upgrades a unit by one tier</p>
       </div>
       <div class="howto-section">
-        <h3>&#x1F3C6; 명예의 전당</h3>
-        <p>최고 티어 유닛(🔱삼지창)끼리 합성하면<br>
-        해당 칸이 명예의 전당으로 영구 점령!<br><br>
-        +1,000,000 보너스 점수 획득<br>
-        어떤 아이템으로도 제거 불가<br>
-        더 많이 만들수록 높은 명성!</p>
+        <h3>&#x1F3C6; Hall of Fame</h3>
+        <p>Merge two max-tier units (Trident) to<br>
+        permanently claim a Hall of Fame cell!<br><br>
+        +1,000,000 bonus points<br>
+        Cannot be removed by any item<br>
+        More = higher prestige!</p>
       </div>
       <div class="howto-section">
-        <h3>&#x26A0;&#xFE0F; 게임 오버</h3>
-        <p>보드가 가득 차고<br>
-        더 이상 합성할 수 없으면 게임 종료!<br>
-        전략적으로 유닛을 배치하세요.</p>
+        <h3>&#x26A0;&#xFE0F; Game Over</h3>
+        <p>When the board is full and<br>
+        no merges are possible, game ends!<br>
+        Place your units strategically.</p>
       </div>
     </div>
   </div>
@@ -990,7 +998,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div id="ranking-screen" class="screen">
     <div class="scr-header">
       <button class="btn-back" id="btn-back-ranking">&#x2190;</button>
-      <div class="scr-title">랭킹</div>
+      <div class="scr-title">RANKING</div>
     </div>
     <div class="ranking-criteria" style="width:100%;max-width:400px;margin-bottom:8px;">
       <button class="ranking-criteria-btn" id="btn-ranking-criteria" style="
@@ -999,47 +1007,47 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
         color:var(--text-secondary);font-size:13px;font-weight:700;
         font-family:'Noto Sans KR',sans-serif;cursor:pointer;
         text-align:left;transition:all 0.3s;letter-spacing:1px;
-      ">랭킹 산정 기준 <span style="float:right;">&#x25BC;</span></button>
+      ">Ranking Criteria <span style="float:right;">&#x25BC;</span></button>
       <div id="ranking-criteria-detail" style="
         display:none;margin-top:6px;padding:14px 16px;
         background:var(--bg-panel);border:1px solid var(--border-subtle);
         border-radius:10px;font-size:12px;color:var(--text-secondary);line-height:1.8;
       ">
-        <strong style="color:var(--text-primary);">1순위: 트로피 개수</strong><br>
-        명예의 전당 트로피를 많이 획득한 플레이어가 상위 랭크<br><br>
-        <strong style="color:var(--text-primary);">2순위: 종합 점수</strong><br>
-        트로피 개수가 동일한 경우 총 점수가 높은 플레이어가 상위 랭크
+        <strong style="color:var(--text-primary);">1st: Trophy Count</strong><br>
+        Players with more Hall of Fame trophies rank higher<br><br>
+        <strong style="color:var(--text-primary);">2nd: Total Score</strong><br>
+        If trophy count is equal, higher total score ranks higher
       </div>
     </div>
     <div class="ranking-content" id="ranking-content">
-      <div class="ranking-loading" id="ranking-loading">불러오는 중...</div>
+      <div class="ranking-loading" id="ranking-loading">Loading...</div>
     </div>
   </div>
 
   <!-- SETTINGS -->
   <div id="settings-screen" class="screen">
     <div class="scr-header">
-      <div class="scr-title">&#xC124;&#xC815;</div>
+      <div class="scr-title">SETTINGS</div>
     </div>
     <div class="settings-list">
       <div class="set-row">
-        <button class="btn-back-inline" id="btn-back-settings">&#x2190; &#xB4A4;&#xB85C;</button>
+        <button class="btn-back-inline" id="btn-back-settings">&#x2190; BACK</button>
       </div>
       <div class="set-row">
-        <span class="set-label">&#xB2E4;&#xD06C; &#xBAA8;&#xB4DC;</span>
+        <span class="set-label">Dark Mode</span>
         <button class="set-toggle on" id="toggle-theme"></button>
       </div>
       <div class="set-row">
-        <span class="set-label">&#xD6A8;&#xACFC;&#xC74C;</span>
+        <span class="set-label">Sound</span>
         <button class="set-toggle on" id="toggle-sfx"></button>
       </div>
       <div class="set-row">
-        <span class="set-label">&#xC9C4;&#xB3D9;</span>
+        <span class="set-label">Vibration</span>
         <button class="set-toggle on" id="toggle-vib"></button>
       </div>
       <div class="set-row">
-        <span class="set-label">&#xAE30;&#xB85D; &#xCD08;&#xAE30;&#xD654;</span>
-        <button class="set-action" id="btn-reset">&#xCD08;&#xAE30;&#xD654;</button>
+        <span class="set-label">Reset Data</span>
+        <button class="set-action" id="btn-reset">RESET</button>
       </div>
     </div>
   </div>
@@ -1049,8 +1057,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     <div class="confirm-box">
       <div class="confirm-text" id="confirm-text"></div>
       <div class="confirm-btns">
-        <button class="confirm-btn yes" id="confirm-yes">&#xD655;&#xC778;</button>
-        <button class="confirm-btn no" id="confirm-no">&#xCDE8;&#xC18C;</button>
+        <button class="confirm-btn yes" id="confirm-yes">OK</button>
+        <button class="confirm-btn no" id="confirm-no">CANCEL</button>
       </div>
     </div>
   </div>
@@ -1083,7 +1091,7 @@ try {
   db = firebase.firestore();
   firebaseReady = true;
 } catch(e) {
-  console.warn('Firebase 미설정 - 로그인/랭킹 기능 비활성화');
+  console.warn('Firebase not configured - login/ranking disabled');
 }
 
 // --- RANKING ---
@@ -1092,7 +1100,7 @@ async function saveScore(finalScore, merges, bestCombo, hofCount) {
   try {
     await db.collection('scores').add({
       uid: currentUser.uid,
-      name: currentUser.displayName || '익명',
+      name: currentUser.displayName || 'Anonymous',
       photoURL: currentUser.photoURL || '',
       score: finalScore,
       merges: merges,
@@ -1101,7 +1109,7 @@ async function saveScore(finalScore, merges, bestCombo, hofCount) {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
   } catch(e) {
-    console.error('점수 저장 실패:', e);
+    console.error('Score save failed:', e);
   }
 }
 
@@ -1121,7 +1129,7 @@ async function loadRanking() {
     });
     return ranking.slice(0, 20);
   } catch(e) {
-    console.error('랭킹 조회 실패:', e);
+    console.error('Ranking load failed:', e);
     return [];
   }
 }
@@ -1145,7 +1153,7 @@ function loginWithGoogle() {
   if (!firebaseReady || !auth) return;
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider).catch(err => {
-    console.error('로그인 실패:', err);
+    console.error('Login failed:', err);
     if (err.code === 'auth/popup-blocked') {
       auth.signInWithRedirect(provider);
     }
@@ -1178,7 +1186,7 @@ function updateAuthUI(user) {
 if (firebaseReady && auth) {
   auth.onAuthStateChanged(updateAuthUI);
 } else {
-  // Firebase 미설정 시 로그인 버튼 숨김
+  // Hide login button when Firebase not configured
   window.addEventListener('DOMContentLoaded', () => {
     const authArea = document.getElementById('auth-area');
     if (authArea) authArea.style.display = 'none';
@@ -1187,29 +1195,29 @@ if (firebaseReady && auth) {
 
 // --- UNITS ---
 const UNITS = [
-  { emoji: '\u2744\uFE0F', name: '눈결정', color: '#90caf9' },  // 0
-  { emoji: '\u{1F4A7}', name: '물방울', color: '#4fc3f7' },  // 1
-  { emoji: '\u{1F525}', name: '불꽃',   color: '#ff7043' },  // 2
-  { emoji: '\u{1F33F}', name: '새싹',   color: '#66bb6a' },  // 3
-  { emoji: '\u{1F48E}', name: '보석',   color: '#4dd0e1' },  // 4
-  { emoji: '\u{2B50}',  name: '별',     color: '#ffd740' },  // 5
-  { emoji: '\u{1F319}', name: '달',     color: '#b0bec5' },  // 6
-  { emoji: '\u2600\uFE0F', name: '태양', color: '#ffab40' }, // 7
-  { emoji: '\u{1F451}', name: '왕관',   color: '#ffd700' },  // 8
-  { emoji: '\u{1F531}', name: '삼지창', color: '#ce93d8' },  // 9
+  { emoji: '\u2744\uFE0F', name: 'Snowflake', color: '#90caf9' },  // 0
+  { emoji: '\u{1F4A7}', name: 'Droplet', color: '#4fc3f7' },  // 1
+  { emoji: '\u{1F525}', name: 'Flame',   color: '#ff7043' },  // 2
+  { emoji: '\u{1F33F}', name: 'Sprout',   color: '#66bb6a' },  // 3
+  { emoji: '\u{1F48E}', name: 'Gem',   color: '#4dd0e1' },  // 4
+  { emoji: '\u{2B50}',  name: 'Star',     color: '#ffd740' },  // 5
+  { emoji: '\u{1F319}', name: 'Moon',     color: '#b0bec5' },  // 6
+  { emoji: '\u2600\uFE0F', name: 'Sun', color: '#ffab40' }, // 7
+  { emoji: '\u{1F451}', name: 'Crown',   color: '#ffd700' },  // 8
+  { emoji: '\u{1F531}', name: 'Trident', color: '#ce93d8' },  // 9
 ];
 const GRID = 6;
 
 // --- GAME BALANCE ---
-const INIT_UNIT_COUNT = 20;     // 초기 보드 유닛 수
-const SPAWN_COUNT = 3;          // 이동 시 스폰 개수
-const SCORE_BASE = 10;          // 점수 공식: 기본값
-const SCORE_TIER_MULT = 15;     // 점수 공식: 티어 배수
-const COMBO_MULT_RATE = 0.5;    // 콤보 배수 계수
-const HOF_BONUS = 1000000;      // 명예의 전당 보너스 점수
-const MILESTONE_SCORE = 1000000;// 변환 아이템 지급 마일스톤
-const PURIFY_TIER = 8;          // 정화 아이템 지급 티어 (왕관)
-const BOMB_COMBO_INTERVAL = 7;  // 폭탄 아이템 지급 콤보 간격
+const INIT_UNIT_COUNT = 20;     // Initial board unit count
+const SPAWN_COUNT = 3;          // Units spawned per move
+const SCORE_BASE = 10;          // Score formula: base value
+const SCORE_TIER_MULT = 15;     // Score formula: tier multiplier
+const COMBO_MULT_RATE = 0.5;    // Combo multiplier rate
+const HOF_BONUS = 1000000;      // Hall of Fame bonus score
+const MILESTONE_SCORE = 1000000;// Transform item milestone
+const PURIFY_TIER = 8;          // Purify item grant tier (Crown)
+const BOMB_COMBO_INTERVAL = 7;  // Bomb item combo interval
 
 // --- AUDIO ---
 const SFX = {
@@ -1384,7 +1392,7 @@ function initBoard() {
     board[r]=[];
     for(let c=0;c<GRID;c++) board[r][c]=null;
   }
-  // Fill with tier 0-4 (5종류 랜덤)
+  // Fill with tier 0-4 (5 random types)
   const cells = [];
   for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++) cells.push({r,c});
   shuffle(cells);
@@ -1724,14 +1732,14 @@ function showHofPopup(type) {
   popup.className = 'hof-popup';
   if(type === 'create') {
     popup.innerHTML = `<div class="hof-icon">\u{1F3C6}</div>
-      <div class="hof-title">명예의 전당 달성!</div>
-      <div class="hof-desc">축하합니다! 최고 티어 합성에 성공하여<br>명예의 전당이 생성되었습니다!<br><br>+1,000,000 보너스 점수 획득!<br><br>이 칸은 영구적으로 보존되며<br>어떤 아이템으로도 제거할 수 없습니다.<br><br>더 많은 명예의 전당을 만들어<br>높은 명성을 쌓아보세요!</div>
-      <button class="hof-close">확인</button>`;
+      <div class="hof-title">Hall of Fame!</div>
+      <div class="hof-desc">Congratulations!<br>You achieved a max-tier merge!<br><br>+1,000,000 bonus points!<br><br>This cell is permanently preserved<br>and cannot be removed by any item.<br><br>Earn more Hall of Fame cells<br>to build your prestige!</div>
+      <button class="hof-close">OK</button>`;
   } else {
     popup.innerHTML = `<div class="hof-icon">\u{1F3C6}</div>
-      <div class="hof-title">명예의 전당</div>
-      <div class="hof-desc">최고 티어 합성의 영광이 깃든 자리입니다.<br>어떤 아이템으로도 제거할 수 없습니다.<br><br>더 많은 명예의 전당을 획득해보세요!</div>
-      <button class="hof-close">닫기</button>`;
+      <div class="hof-title">Hall of Fame</div>
+      <div class="hof-desc">A cell of glory from a max-tier merge.<br>Cannot be removed by any item.<br><br>Earn more Hall of Fame cells!</div>
+      <button class="hof-close">Close</button>`;
   }
   overlay.appendChild(popup);
   wrap.appendChild(overlay);
@@ -1746,7 +1754,7 @@ function showGameToast(msg) {
   overlay.className = 'game-toast-overlay';
   const popup = document.createElement('div');
   popup.className = 'game-toast-popup';
-  popup.innerHTML = `<div class="gt-msg">${msg}</div><button class="gt-close">닫기</button>`;
+  popup.innerHTML = `<div class="gt-msg">${msg}</div><button class="gt-close">Close</button>`;
   overlay.appendChild(popup);
   wrap.appendChild(overlay);
   popup.querySelector('.gt-close').addEventListener('click', () => overlay.remove());
@@ -1761,7 +1769,7 @@ function updateHUD() {
   for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++) if(board[r][c] && board[r][c].hallOfFame) hofCount++;
   if(hofCount > save.bestHof) { save.bestHof = hofCount; writeSave(); }
   document.getElementById('hud-hof').textContent = hofCount + '/' + save.bestHof;
-  // 점수 기반 아이템 체크 (점수가 변하는 모든 상황에서 체크)
+  // Score-based item check (check on every score change)
   checkScoreMilestone();
 }
 
@@ -1818,7 +1826,7 @@ function checkGameOver() {
     document.getElementById('go-hof').textContent = hofCount;
     document.getElementById('go-new-record').innerHTML = isNewBest
       ? '<div class="go-new-record">NEW RECORD!</div>' : '';
-    // Firestore에 점수 저장
+    // Save score to Firestore
     saveScore(score, mergeCount, maxCombo, hofCount);
     showScreen('gameover-screen');
   }, 700);
@@ -1859,17 +1867,17 @@ function toggleVib() { save.vib=!save.vib; applySettings(); writeSave(); SFX.pla
 async function showRankingScreen() {
   showScreen('ranking-screen');
   const content = document.getElementById('ranking-content');
-  content.innerHTML = '<div class="ranking-loading">불러오는 중...</div>';
+  content.innerHTML = '<div class="ranking-loading">Loading...</div>';
 
   const ranking = await loadRanking();
 
   if (ranking.length === 0) {
-    content.innerHTML = '<div class="ranking-empty">아직 기록이 없습니다.<br>게임을 플레이하고 점수를 등록하세요!</div>';
+    content.innerHTML = '<div class="ranking-empty">No records yet.<br>Play the game and submit your score!</div>';
     return;
   }
 
   let html = '<table class="ranking-table"><thead><tr>';
-  html += '<th>순위</th><th>플레이어</th><th>트로피</th><th>점수</th><th>콤보</th>';
+  html += '<th>Rank</th><th>Player</th><th>Trophy</th><th>Score</th><th>Combo</th>';
   html += '</tr></thead><tbody>';
 
   ranking.forEach((r, i) => {
@@ -1881,7 +1889,7 @@ async function showRankingScreen() {
     if (r.photoURL) {
       html += `<img class="rank-avatar" src="${r.photoURL}" alt="">`;
     }
-    html += `<span class="rank-name">${r.name || '익명'}</span>`;
+    html += `<span class="rank-name">${r.name || 'Anonymous'}</span>`;
     html += `</div></td>`;
     html += `<td style="text-align:center;font-weight:900;color:rgb(var(--accent-gold));">${r.hof || 0}</td>`;
     html += `<td class="rank-score">${(r.score || 0).toLocaleString()}</td>`;
@@ -1933,9 +1941,9 @@ function updateItemBar() {
     slot.classList.toggle('active-item', itemMode === key);
   });
   const hint = document.getElementById('item-hint');
-  if(itemMode === 'purify') { hint.textContent = '정화: 삭제할 유닛을 탭하세요 (해당 티어 전체 삭제)'; hint.style.display = ''; }
-  else if(itemMode === 'bomb') { hint.textContent = '폭탄: 폭파할 위치를 탭하세요 (3x3 범위 삭제)'; hint.style.display = ''; }
-  else if(itemMode === 'transform') { hint.textContent = '변환: 승급할 유닛을 탭하세요 (+1 티어)'; hint.style.display = ''; }
+  if(itemMode === 'purify') { hint.textContent = 'Purify: Tap a unit to remove all of that tier'; hint.style.display = ''; }
+  else if(itemMode === 'bomb') { hint.textContent = 'Bomb: Tap a spot to destroy 3x3 area'; hint.style.display = ''; }
+  else if(itemMode === 'transform') { hint.textContent = 'Transform: Tap a unit to upgrade +1 tier'; hint.style.display = ''; }
   else { hint.style.display = 'none'; }
 }
 
@@ -1945,8 +1953,8 @@ function grantItem(key) {
   if(items[key] >= ITEM_MAX) return;
   items[key]++;
   updateItemBar();
-  const names = { purify: '✨ 정화', bomb: '💣 폭탄', transform: '🔄 변환' };
-  showItemGetNotify(names[key] + ' 획득!');
+  const names = { purify: '<i class="fa-solid fa-wand-magic-sparkles"></i> Purify', bomb: '<i class="fa-solid fa-bomb"></i> Bomb', transform: '<i class="fa-solid fa-arrows-rotate"></i> Transform' };
+  showItemGetNotify(names[key] + ' acquired!');
   SFX.play('newbest');
 }
 
@@ -1954,15 +1962,15 @@ function showItemGetNotify(text) {
   const wrap = document.getElementById('board-wrap');
   const el = document.createElement('div');
   el.className = 'item-get-notify';
-  el.textContent = text;
+  el.innerHTML = text;
   wrap.appendChild(el);
   setTimeout(() => el.remove(), 1800);
 }
 
 function checkItemGrants(newTier) {
-  // 정화: 왕관 합성 성공
+  // Purify: granted on Crown merge
   if(newTier === PURIFY_TIER) grantItem('purify');
-  // 폭탄: 일정 콤보 마다 지급
+  // Bomb: granted every N combos
   if(combo > 0 && combo % BOMB_COMBO_INTERVAL === 0) grantItem('bomb');
 }
 
@@ -1981,7 +1989,7 @@ function useItemOnCell(r, c) {
   if(!itemMode) return false;
   // All items are blocked by Hall of Fame cells
   if(board[r][c] && board[r][c].hallOfFame) {
-    showGameToast('명예의 전당에는 아이템을 사용할 수 없습니다');
+    showGameToast('Items cannot be used on Hall of Fame cells');
     return true;
   }
 
@@ -2039,7 +2047,7 @@ function useItemOnCell(r, c) {
     if(!board[r][c]) return false;
     const oldTier = board[r][c].tier;
     if(oldTier >= UNITS.length - 1) {
-      showGameToast('🔱 삼지창은 최고 티어 유닛으로<br>승급할 상위 티어가 없어<br>변환 아이템을 사용할 수 없습니다.');
+      showGameToast('🔱 Trident is the highest tier unit.<br>No higher tier available.<br>Cannot use Transform item.');
       return true;
     }
     board[r][c].tier = oldTier + 1;
@@ -2113,7 +2121,7 @@ document.getElementById('toggle-sfx').addEventListener('click', toggleSfx);
 document.getElementById('toggle-vib').addEventListener('click', toggleVib);
 
 document.getElementById('btn-reset').addEventListener('click', () => {
-  showConfirm('모든 기록이 삭제됩니다.\n초기화하시겠습니까?', () => {
+  showConfirm('All data will be deleted.\nAre you sure you want to reset?', () => {
     save = { best:0, bestHof:0, sfx:true, vib:true, theme:'dark' };
     writeSave(); applySettings(); initTitle();
     showScreen('title-screen');
@@ -2129,7 +2137,7 @@ document.addEventListener('keydown', (e) => {
     if(curScreen==='game-screen' && gameActive) pauseGame();
     else if(curScreen==='pause-screen') resumeGame();
   }
-  // Debug: 숫자 1 → 모든 유닛 한 단계 업그레이드
+  // Debug: key 1 → upgrade all units one tier
   if(e.code==='Digit1' && gameActive) {
     for(let r=0;r<GRID;r++) for(let c=0;c<GRID;c++) {
       if(board[r][c] && !board[r][c].hallOfFame && board[r][c].tier < UNITS.length-1) {
