@@ -305,7 +305,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 .hud-val.score-val { color: rgb(var(--accent-gold)); }
 .hud-val.combo-val { color: #7dff7d; }
 .hud-btn {
-  width: 36px; height: 36px; border-radius: 8px; border: 2px solid var(--border-light);
+  width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border-light);
   background: var(--bg-panel); color: var(--btn-text); font-size: 15px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.3s; font-family: 'Noto Sans KR', sans-serif;
@@ -330,13 +330,13 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 /* Board */
 .board-wrap {
   position: relative; width: 100%; max-width: 420px;
-  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex: 1; display: flex; align-items: flex-start; justify-content: center;
   min-height: 0;
 }
 .board {
   display: grid; gap: 5px; width: 100%; aspect-ratio: 1; max-height: 100%;
   padding: 8px; background: var(--bg-panel); border-radius: 16px;
-  border: 2px solid var(--border-subtle);
+  border: 1px solid var(--border-subtle);
 }
 .cell {
   border-radius: 10px; display: flex; align-items: center; justify-content: center;
@@ -558,19 +558,18 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   padding: 20px; gap: 12px;
 }
 .scr-header {
-  width: 100%; display: flex; align-items: center; justify-content: center;
-  position: relative; padding: 10px 0;
+  width: 100%; max-width: 380px; display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0;
 }
 .scr-title {
   font-size: 20px; font-weight: 900; color: var(--text-primary); letter-spacing: 4px;
   text-shadow: 0 0 12px rgba(var(--accent-purple),0.5);
 }
 .btn-back {
-  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
-  width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--border-light);
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light);
   background: var(--bg-panel); color: var(--text-primary); font-size: 18px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s; font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.3s; font-family: 'Noto Sans KR', sans-serif; flex-shrink: 0;
 }
 .btn-back:hover { background: var(--bg-panel-active); border-color: var(--text-dim); }
 .btn-back-inline {
@@ -649,11 +648,11 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   width: 200px; padding: 13px 0; border-radius: 12px; font-size: 14px;
   font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer;
   transition: all 0.3s; letter-spacing: 3px;
-  border: 2px solid var(--border-light); background: var(--bg-panel);
+  border: 1px solid var(--border-light); background: var(--bg-panel);
   color: var(--btn-text);
 }
 .pause-btn:hover { background: var(--bg-panel-active); transform: scale(1.04); }
-.pause-btn.resume { border-color: rgba(120,255,120,0.4); background: rgba(120,255,120,0.06); color: #7dff7d; }
+.pause-btn.resume { border-color: rgba(255,80,80,0.5); background: rgba(255,80,80,0.06); color: #ff6b6b; }
 
 /* === CONFIRM === */
 .confirm-overlay {
@@ -790,11 +789,15 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 [data-theme="light"] .pause-title { text-shadow: none; color: #1a1a2e; }
 [data-theme="light"] #gameover-screen { backdrop-filter: blur(4px); }
 [data-theme="light"] #pause-screen { backdrop-filter: blur(4px); }
+[data-theme="light"] .pause-btn { border-color: #000000; color: #000000; }
+[data-theme="light"] .pause-btn.resume { border-color: rgba(255,80,80,0.5); color: #ff6b6b; }
 [data-theme="light"] .score-fly { text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 [data-theme="light"] .combo-pop { text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 [data-theme="light"] .new-best { text-shadow: 0 1px 4px rgba(180,140,0,0.3); }
 [data-theme="light"] .board { background: rgba(255,255,255,0.55); border-color: rgba(0,0,0,0.6); }
 [data-theme="light"] .howto-section { background: rgba(255,255,255,0.6); }
+[data-theme="light"] .set-action { background: #ff0000; color: #ffffff; border-color: #ff0000; }
+[data-theme="light"] .set-action:hover { background: #cc0000; }
 [data-theme="light"] .set-row { background: rgba(255,255,255,0.6); border-color: rgba(34,120,60,0.5); }
 [data-theme="light"] .confirm-overlay { background: rgba(244,245,248,0.6); }
 [data-theme="light"] .hof-overlay { background: rgba(244,245,248,0.5); }
@@ -947,8 +950,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- HOW TO PLAY -->
   <div id="howto-screen" class="screen">
     <div class="scr-header">
-      <button class="btn-back" id="btn-back-howto">&#x2190;</button>
       <div class="scr-title">HOW TO PLAY</div>
+      <button class="btn-back" id="btn-back-howto">&#x2190;</button>
     </div>
     <div class="howto-content">
       <div class="howto-section">
@@ -1002,8 +1005,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <!-- RANKING -->
   <div id="ranking-screen" class="screen">
     <div class="scr-header">
-      <button class="btn-back" id="btn-back-ranking">&#x2190;</button>
       <div class="scr-title">RANKING</div>
+      <button class="btn-back" id="btn-back-ranking">&#x2190;</button>
     </div>
     <div class="ranking-criteria" style="width:100%;max-width:400px;margin-bottom:8px;">
       <button class="ranking-criteria-btn" id="btn-ranking-criteria" style="
@@ -1033,11 +1036,9 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
   <div id="settings-screen" class="screen">
     <div class="scr-header">
       <div class="scr-title">SETTINGS</div>
+      <button class="btn-back" id="btn-back-settings">&#x2190;</button>
     </div>
     <div class="settings-list">
-      <div class="set-row">
-        <button class="btn-back-inline" id="btn-back-settings">&#x2190; BACK</button>
-      </div>
       <div class="set-row">
         <span class="set-label">Dark Mode</span>
         <button class="set-toggle on" id="toggle-theme"></button>
