@@ -693,51 +693,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 .confirm-btn.yes { border: 2px solid rgba(255,80,80,0.4); background: rgba(255,80,80,0.08); color: #ff6b6b; }
 .confirm-btn.no { border: 2px solid var(--border-light); background: var(--bg-panel); color: var(--btn-text); }
 
-/* === TERMS POPUP === */
-.terms-overlay {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5); z-index: 310;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: all 0.3s;
-}
-.terms-overlay.active { opacity: 1; pointer-events: auto; }
-.terms-box {
-  background: var(--confirm-bg); border-radius: 16px; padding: 24px;
-  border: 2px solid var(--border-light);
-  max-width: 360px; width: 90%; max-height: 80vh; display: flex; flex-direction: column;
-}
-.terms-title {
-  font-size: 16px; font-weight: 700; color: var(--text-primary);
-  text-align: center; margin-bottom: 4px;
-}
-.terms-version {
-  font-size: 11px; color: var(--text-dim); text-align: center; margin-bottom: 12px;
-}
-.terms-content {
-  flex: 1; overflow-y: auto; margin-bottom: 16px; padding: 12px;
-  background: var(--bg-panel); border-radius: 10px; border: 1px solid var(--border-subtle);
-  max-height: 45vh;
-}
-.terms-content::-webkit-scrollbar { width: 4px; }
-.terms-content::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 2px; }
-.terms-section-heading {
-  font-size: 13px; font-weight: 700; color: var(--text-primary); margin: 12px 0 6px;
-}
-.terms-section-heading:first-child { margin-top: 0; }
-.terms-section-text {
-  font-size: 12px; color: var(--text-secondary); line-height: 1.7; white-space: pre-line;
-}
-.terms-btns { display: flex; gap: 12px; justify-content: center; }
-.terms-btn {
-  padding: 10px 22px; border-radius: 10px; font-size: 13px; font-weight: 700;
-  font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.3s;
-}
-.terms-btn.agree {
-  border: 2px solid rgba(var(--accent-purple),0.5); background: rgba(var(--accent-purple),0.15);
-  color: rgb(var(--accent-purple));
-}
-.terms-btn.decline { border: 2px solid var(--border-light); background: var(--bg-panel); color: var(--btn-text); }
-
 /* === ITEM SLOTS === */
 .item-bar {
   width: 100%; max-width: 420px; display: flex; gap: 6px; justify-content: center; align-items: center;
@@ -862,8 +817,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
 [data-theme="light"] .set-action:hover { background: #cc0000; }
 [data-theme="light"] .set-row { background: rgba(255,255,255,0.6); border-color: rgba(34,120,60,0.5); }
 [data-theme="light"] .confirm-overlay { background: rgba(244,245,248,0.6); }
-[data-theme="light"] .terms-overlay { background: rgba(244,245,248,0.6); }
-[data-theme="light"] .terms-content { background: rgba(255,255,255,0.75); border-color: rgba(60,60,80,0.15); }
 [data-theme="light"] .hof-overlay { background: rgba(244,245,248,0.5); }
 [data-theme="light"] .game-toast-overlay { background: rgba(244,245,248,0.5); }
 [data-theme="light"] .item-bar { background: rgba(255,255,255,0.65); border-color: #000000; }
@@ -1168,19 +1121,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Noto San
     </div>
   </div>
 
-  <!-- TERMS -->
-  <div class="terms-overlay" id="terms-overlay">
-    <div class="terms-box">
-      <div class="terms-title">Terms of Service</div>
-      <div class="terms-version" id="terms-version"></div>
-      <div class="terms-content" id="terms-content"></div>
-      <div class="terms-btns">
-        <button class="terms-btn agree" id="terms-agree">AGREE</button>
-        <button class="terms-btn decline" id="terms-decline">DECLINE</button>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <script>
@@ -1258,7 +1198,6 @@ async function saveScore(finalScore, merges, bestCombo, hofCount) {
     await db.collection('scores').add({
       uid: currentUser.uid,
       name: currentUser.displayName || 'Anonymous',
-      email: currentUser.email || '',
       photoURL: currentUser.photoURL || '',
       score: finalScore,
       merges: merges,
@@ -1337,96 +1276,27 @@ function logoutUser() {
   auth.signOut();
 }
 
-let cachedTerms = null;
-
-async function loadTerms() {
-  if (cachedTerms) return cachedTerms;
-  try {
-    const res = await fetch('terms.json');
-    cachedTerms = await res.json();
-    return cachedTerms;
-  } catch(e) {
-    console.error('Terms load failed:', e);
-    return null;
-  }
-}
-
-function showTermsPopup(terms) {
-  return new Promise((resolve) => {
-    const overlay = document.getElementById('terms-overlay');
-    const versionEl = document.getElementById('terms-version');
-    const contentEl = document.getElementById('terms-content');
-
-    versionEl.textContent = 'v' + terms.version + ' (' + terms.updatedAt + ')';
-    contentEl.innerHTML = '';
-    terms.sections.forEach(section => {
-      const heading = document.createElement('div');
-      heading.className = 'terms-section-heading';
-      heading.textContent = section.heading;
-      const text = document.createElement('div');
-      text.className = 'terms-section-text';
-      text.textContent = section.content;
-      contentEl.appendChild(heading);
-      contentEl.appendChild(text);
-    });
-
-    overlay.classList.add('active');
-
-    const agreeBtn = document.getElementById('terms-agree');
-    const declineBtn = document.getElementById('terms-decline');
-
-    function cleanup() {
-      agreeBtn.removeEventListener('click', onAgree);
-      declineBtn.removeEventListener('click', onDecline);
-      overlay.classList.remove('active');
-    }
-    function onAgree() { cleanup(); resolve(true); }
-    function onDecline() { cleanup(); resolve(false); }
-
-    agreeBtn.addEventListener('click', onAgree);
-    declineBtn.addEventListener('click', onDecline);
-  });
-}
-
-async function handleUserLogin(user) {
+async function saveUserProfile(user) {
   if (!firebaseReady || !db) return;
   try {
     const userRef = db.collection('users').doc(user.uid);
     const doc = await userRef.get();
-
     if (doc.exists) {
-      // Existing member: update profile and lastLogin
       await userRef.update({
         name: user.displayName || 'Anonymous',
-        email: user.email || '',
         photoURL: user.photoURL || '',
         lastLogin: firebase.firestore.FieldValue.serverTimestamp()
       });
     } else {
-      // New user: show terms agreement
-      const terms = await loadTerms();
-      if (!terms) {
-        auth.signOut();
-        return;
-      }
-      const agreed = await showTermsPopup(terms);
-      if (!agreed) {
-        auth.signOut();
-        return;
-      }
-      // Create user document with agreement info
       await userRef.set({
         name: user.displayName || 'Anonymous',
-        email: user.email || '',
         photoURL: user.photoURL || '',
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-        agreedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        agreedVersion: terms.version
+        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
       });
     }
   } catch(e) {
-    console.error('User login handling failed:', e);
+    console.error('User profile save failed:', e);
   }
 }
 
@@ -1440,8 +1310,8 @@ function updateAuthUI(user) {
     loginBtn.style.display = 'none';
     userInfo.style.display = 'flex';
     document.getElementById('user-avatar').src = user.photoURL || '';
-    document.getElementById('user-name').textContent = user.displayName || user.email;
-    handleUserLogin(user);
+    document.getElementById('user-name').textContent = user.displayName || 'Anonymous';
+    saveUserProfile(user);
   } else {
     currentUser = null;
     loginBtn.style.display = '';

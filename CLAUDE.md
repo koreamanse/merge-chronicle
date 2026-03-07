@@ -3,8 +3,7 @@
 > 공통 규칙은 상위 폴더의 CLAUDE.md 참조
 
 ## 프로젝트 구조
-- `index.html`: 게임 메인 파일 (HTML + CSS + JS 올인원)
-- `terms.json`: 이용약관 내용 (버전 관리, 동적 로드)
+- 단일 파일: `index.html` (HTML + CSS + JS 올인원)
 - 기술: HTML5, CSS3, Vanilla JavaScript, Web Audio API, localStorage
 - 외부 의존성: Google Fonts (Noto Sans KR) - 폰트만 CDN 사용
 
@@ -19,16 +18,13 @@
 - Firebase Auth 기반 Google 로그인 사용
 - Firestore 컬렉션:
   - `users`: 회원 데이터 (uid를 문서 ID로 사용, 유저당 1개)
-    - name, email, photoURL, createdAt(가입일), lastLogin(마지막 로그인)
-    - agreedAt(약관 동의일), agreedVersion(동의한 약관 버전)
-    - 최초 로그인 시 약관 동의 팝업 표시 → 동의 시 회원 문서 생성, 거부 시 로그아웃
-    - 재로그인 시 프로필 정보 및 lastLogin 업데이트
+    - name, photoURL, createdAt(가입일), lastLogin(마지막 로그인)
+    - 최초 로그인 시 생성, 재로그인 시 프로필 정보 및 lastLogin 업데이트
   - `scores`: 게임 점수 기록 (게임 오버 시마다 추가)
-    - uid, name, email, photoURL, score, merges, maxCombo, hof, timestamp
+    - uid, name, photoURL, score, merges, maxCombo, hof, timestamp
 - displayName은 실명 인증 아님 (사용자가 자유롭게 수정 가능한 닉네임 성격)
 - 탈퇴 기능: 설정 > DELETE ACCOUNT (users 문서 + scores 전체 기록 + Auth 계정 삭제)
-- 약관 동의: 최초 로그인 시 terms.json 기반 약관 팝업 표시, 동의 기록(agreedAt, agreedVersion) 저장
-- 약관 내용: terms.json 파일에서 관리 (버전, 섹션별 내용)
+- 개인정보: email 수집하지 않음 (Google 공개 프로필 정보만 사용, 별도 약관 불필요)
 
 ## 작업 시 주의사항
 - 게임 밸런스 상수는 스크립트 상단 GAME BALANCE 섹션에 집중되어 있음 (Single Source of Truth)
